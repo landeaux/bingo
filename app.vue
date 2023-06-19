@@ -5,9 +5,10 @@ useHead({ title });
 const genreInput = ref("");
 const result = ref("");
 
-function onSubmit() {
+async function onSubmit() {
   genreInput.value = "";
-  result.value = "The Doors, The Beatles, The Rolling Stones";
+  const { data } = await useFetch("/api/generate");
+  result.value = data.value?.result || "";
 }
 </script>
 
