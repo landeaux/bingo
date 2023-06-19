@@ -1,5 +1,3 @@
 <template>
-  <div>
-    Bingo
-  </div>
+  <div>Bingo</div>
 </template>
