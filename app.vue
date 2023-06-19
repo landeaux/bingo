@@ -1,3 +1,8 @@
+<script setup lang="ts">
+const title = ref("Bingo");
+useHead({ title });
+</script>
+
 <template>
-  <div>Bingo</div>
+  <h1>{{ title }}</h1>
 </template>
