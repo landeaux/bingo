@@ -48,7 +48,7 @@ async function onSubmit() {
       />
       <input type="submit" value="Generate names" />
     </form>
-    <span v-if="errorMessage">{{ errorMessage }}</span>
+    <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
     <div v-else-if="result" class="result">{{ result }}</div>
   </main>
 </template>

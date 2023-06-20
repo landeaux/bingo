@@ -5,6 +5,7 @@
   --color-text-placeholder: oklch(51.47% 0.04 289.06);
   --color-main: oklch(51.47% 0.224 289.06);
   --color-dark: oklch(39.47% 0.224 289.06);
+  --color-error: oklch(58.24% 0.232 23.6);
 }
 
 @font-face {
@@ -93,7 +94,11 @@
   background-color: var(--color-dark);
 }
 
-.main .result {
+.main .result, .main .error {
   font-weight: bold;
   margin-top: 40px;
+}
+
+.main .error {
+  color: var(--color-error)
 }
