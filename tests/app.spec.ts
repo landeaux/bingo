@@ -18,4 +18,12 @@ test.describe("App", () => {
 
     await expect(page.getByText(/.+, .+, .+/)).toBeVisible();
   });
+
+  test("shows an error when no genre is entered", async ({ page }) => {
+    await page.goto("/");
+
+    await page.getByRole("button", { name: "Generate names" }).click();
+
+    await expect(page.getByText("Please enter a valid genre")).toBeVisible();
+  });
 });

@@ -2,13 +2,34 @@
 const title = ref("Bingo");
 useHead({ title });
 
-const genreInput = ref("");
+const genre = ref("");
 const result = ref("");
+const errorMessage = ref("");
 
 async function onSubmit() {
-  genreInput.value = "";
-  const { data } = await useFetch("/api/generate");
-  result.value = data.value?.result || "";
+  try {
+    const { data, error } = await useFetch("/api/generate", {
+      method: "POST",
+      body: {
+        genre,
+      },
+    });
+    if (error && error.value) {
+      const errMessage =
+        error.value.statusMessage ||
+        `Request failed with status ${error.value.statusCode}`;
+      throw new Error(errMessage);
+    }
+    result.value = data.value?.result || "";
+    genre.value = "";
+    errorMessage.value = "";
+  } catch (err) {
+    if (err instanceof Error) {
+      errorMessage.value = err.message;
+    } else {
+      errorMessage.value = "Something went wrong";
+    }
+  }
 }
 </script>
 
@@ -20,13 +41,14 @@ async function onSubmit() {
       <label for="genre">Genre:</label>
       <input
         id="genre"
-        v-model="genreInput"
+        v-model="genre"
         type="text"
         name="genre"
         placeholder="Enter a genre"
       />
       <input type="submit" value="Generate names" />
     </form>
-    <div>{{ result }}</div>
+    <span v-if="errorMessage">{{ errorMessage }}</span>
+    <div v-else-if="result">{{ result }}</div>
   </main>
 </template>
