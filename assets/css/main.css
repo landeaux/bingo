@@ -39,7 +39,8 @@
   padding-top: 60px;
 }
 
-.main h1, .main h2 {
+.main h1,
+.main h2 {
   line-height: 40px;
   font-weight: bold;
 }
