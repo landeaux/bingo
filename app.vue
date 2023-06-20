@@ -34,11 +34,11 @@ async function onSubmit() {
 </script>
 
 <template>
-  <main>
+  <main class="main">
     <h1>{{ title }}</h1>
     <h2>Generate Band Names</h2>
     <form @submit.prevent="onSubmit">
-      <label for="genre">Genre:</label>
+      <label for="genre">Genre</label>
       <input
         id="genre"
         v-model="genre"
@@ -49,6 +49,10 @@ async function onSubmit() {
       <input type="submit" value="Generate names" />
     </form>
     <span v-if="errorMessage">{{ errorMessage }}</span>
-    <div v-else-if="result">{{ result }}</div>
+    <div v-else-if="result" class="result">{{ result }}</div>
   </main>
 </template>
+
+<style>
+@import url("~/assets/css/main.css");
+</style>
