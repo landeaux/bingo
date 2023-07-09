@@ -36,7 +36,7 @@ async function onSubmit() {
 <template>
   <main class="main">
     <h1>{{ title }}</h1>
-    <h2>Generate Band Names</h2>
+    <h2>GPT-Driven Band Name Generator</h2>
     <form @submit.prevent="onSubmit">
       <label for="genre">Genre</label>
       <input
