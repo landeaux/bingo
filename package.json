@@ -9,6 +9,7 @@
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "test:e2e": "playwright test",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
