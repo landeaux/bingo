@@ -6,7 +6,7 @@ Bingo is a band name generator app powered by OpenAI's GPT models. The user
 provides a desired genre and three novel band names will be provided that fit
 in that genre.
 
-The application was built with [Nuxt 3]. Look at the [Nuxt 3
+The application was built with Nuxt 3. Look at the [Nuxt 3
 documentation](https://nuxt.com/docs/getting-started/introduction) to learn
 more.
 
