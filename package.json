@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "bingo",
   "private": true,
   "scripts": {
     "build": "nuxt build",
