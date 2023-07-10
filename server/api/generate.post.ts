@@ -7,6 +7,7 @@ const openai = new OpenAIApi(configuration);
 
 export default defineEventHandler(async (event) => {
   if (!configuration.apiKey) {
+    // eslint-disable-next-line no-console
     console.error("OpenAI API key not configured");
     throw createError({
       statusCode: 500,
@@ -33,12 +34,14 @@ export default defineEventHandler(async (event) => {
     return { result: completion.data.choices[0].text };
   } catch (error: any) {
     if (error.response) {
+      // eslint-disable-next-line no-console
       console.error(error.response.status, error.response.data);
       throw createError({
         statusCode: error.response.status,
         statusMessage: error.response.data,
       });
     } else {
+      // eslint-disable-next-line no-console
       console.error(`Error with OpenAI API request: ${error.message}`);
       throw createError({
         statusCode: 500,
