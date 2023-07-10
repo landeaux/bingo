@@ -1,6 +1,18 @@
-# Nuxt 3 Minimal Starter
+# Bingo — GPT-Driven Band Name Generator
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## About
+
+Bingo is a band name generator app powered by OpenAI's GPT models. The user
+provides a desired genre and three novel band names will be provided that fit
+in that genre.
+
+The application was built with [Nuxt 3]. Look at the [Nuxt 3
+documentation](https://nuxt.com/docs/getting-started/introduction) to learn
+more.
+
+### What's with the name?
+
+The name "Bingo" is a "backronym" formed from the words, "Band Name Generator".
 
 ## Setup
 
@@ -16,6 +28,16 @@ pnpm install
 # yarn
 yarn install
 ```
+
+Also, make sure to configure your environment.
+
+1. Copy the example env file:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Update the `OPENAI_API_KEY` variable with your OpenAI API Key.
 
 ## Development Server
 
@@ -60,4 +82,8 @@ pnpm run preview
 yarn preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Deployment
+
+Check out the [deployment
+documentation](https://nuxt.com/docs/getting-started/deployment) for more
+information.
