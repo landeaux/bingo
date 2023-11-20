@@ -3,6 +3,7 @@ const title = ref("Bingo");
 useHead({ title });
 
 const genre = ref("");
+const wordLength = ref(2);
 const result = ref("");
 const errorMessage = ref("");
 
@@ -12,6 +13,7 @@ async function onSubmit() {
       method: "POST",
       body: {
         genre: genre.value,
+        wordLength: wordLength.value,
       },
     });
     if (error && error.value) {
@@ -46,6 +48,18 @@ async function onSubmit() {
         name="genre"
         placeholder="Enter a genre"
       />
+
+      <label for="word-length">Word Length</label>
+      <input
+        id="word-length"
+        v-model.number="wordLength"
+        type="number"
+        name="word-length"
+        placeholder="Word length"
+        min="1"
+        max="7"
+      />
+
       <input type="submit" value="Generate names" />
     </form>
     <div v-if="errorMessage" class="error">{{ errorMessage }}</div>

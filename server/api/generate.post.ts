@@ -1,5 +1,10 @@
 import OpenAI from "openai";
 
+interface RequestBody {
+  genre: string
+  wordLength: number
+}
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -14,8 +19,9 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const body = await readBody<{ genre: string }>(event);
+  const body = await readBody<RequestBody>(event);
   const genre = body.genre || "";
+  const wordLength = body.wordLength || 2;
 
   if (genre.trim().length === 0) {
     throw createError({
@@ -28,7 +34,7 @@ export default defineEventHandler(async (event) => {
     const completion = await openai.chat.completions.create({
       model: "gpt-4-1106-preview",
       messages: [
-        { role: "system", content: buildPrompt() },
+        { role: "system", content: buildPrompt(wordLength) },
         { role: "user", content: buildUserPrompt(genre) },
       ],
       temperature: 1.0,
@@ -66,8 +72,8 @@ function toTitleCase(str: string) {
     .join(" ");
 }
 
-function buildPrompt() {
-  return `You are a band name generator. The user will give you a genre and you are to respond with three novel band names that fit that genre. Do not suggest band names that already exist. Suggested band names should not be numbers. Each band name should be separated by a comma.
+function buildPrompt(wordLength: number) {
+  return `You are a band name generator. The user will give you a genre and you are to respond with three novel band names that fit that genre. Do not suggest band names that already exist. Suggested band names must not be numbered. Each band name should be separated by a comma. Suggested band names must be ${wordLength} words in length.
 
 Here are some example interactions:
 User: Indie Rock
