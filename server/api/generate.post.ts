@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const body = await readBody(event);
+  const body = await readBody<{ genre: string }>(event);
   const genre = body.genre || "";
 
   if (genre.trim().length === 0) {

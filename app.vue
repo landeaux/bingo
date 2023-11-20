@@ -11,7 +11,7 @@ async function onSubmit() {
     const { data, error } = await useFetch("/api/generate", {
       method: "POST",
       body: {
-        genre,
+        genre: genre.value,
       },
     });
     if (error && error.value) {
