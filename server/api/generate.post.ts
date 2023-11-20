@@ -1,12 +1,11 @@
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
 
 export default defineEventHandler(async (event) => {
-  if (!configuration.apiKey) {
+  if (!openai.apiKey) {
     // eslint-disable-next-line no-console
     console.error("OpenAI API key not configured");
     throw createError({
@@ -26,19 +25,28 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const completion = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: buildPrompt(genre),
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4-1106-preview",
+      messages: [
+        { role: "system", content: buildPrompt() },
+        { role: "user", content: buildUserPrompt(genre) },
+      ],
       temperature: 1.0,
     });
-    return { result: completion.data.choices[0].text };
+    return { result: completion.choices[0].message.content };
   } catch (error: any) {
-    if (error.response) {
+    if (error instanceof OpenAI.APIError) {
       // eslint-disable-next-line no-console
-      console.error(error.response.status, error.response.data);
+      console.error(error.status); // e.g. 401
+      // eslint-disable-next-line no-console
+      console.error(error.message); // e.g. The authentication token you passed was invalid...
+      // eslint-disable-next-line no-console
+      console.error(error.code); // e.g. 'invalid_api_key'
+      // eslint-disable-next-line no-console
+      console.error(error.type); // e.g. 'invalid_request_error'
       throw createError({
-        statusCode: error.response.status,
-        statusMessage: error.response.data,
+        statusCode: error.status,
+        statusMessage: error.message,
       });
     } else {
       // eslint-disable-next-line no-console
@@ -58,18 +66,19 @@ function toTitleCase(str: string) {
     .join(" ");
 }
 
-function buildPrompt(genre: string) {
+function buildPrompt() {
+  return `You are a band name generator. The user will give you a genre and you are to respond with three novel band names that fit that genre. Do not suggest band names that already exist.
+
+Here are some example interactions:
+User: Indie Rock
+You: Dirty Projectors, Grizzly Bear, Coconut Records
+User: Electronica
+You: Daft Punk, SBTRKT, Aphex Twin
+User: Rap
+You: Kendrick Lamar, MF DOOM, A Tribe Called Quest`;
+}
+
+function buildUserPrompt(genre: string) {
   const titleCasedGenre = toTitleCase(genre);
-  return `I will give three examples of genres and band names of existing bands in those genres. Suggest three band names that don't already exist and that sound like band names in the fourth given genre. Band names must be one to four words long.
-
-Examples:
-Genre: Indie Rock
-Names: Dirty Projectors, Grizzly Bear, Coconut Records
-Genre: Electronica
-Names: Daft Punk, SBTRKT, Aphex Twin
-Genre: Rap
-Names: Kendrick Lamar, MF DOOM, A Tribe Called Quest
-
-Genre: ${titleCasedGenre}
-Names:`;
+  return `${titleCasedGenre}`;
 }
