@@ -67,15 +67,16 @@ function toTitleCase(str: string) {
 }
 
 function buildPrompt() {
-  return `You are a band name generator. The user will give you a genre and you are to respond with three novel band names that fit that genre. Do not suggest band names that already exist.
+  return `You are a band name generator. The user will give you a genre and you are to respond with three novel band names that fit that genre. Do not suggest band names that already exist. Suggested band names should not be numbers. Each band name should be separated by a comma.
 
 Here are some example interactions:
 User: Indie Rock
-You: Dirty Projectors, Grizzly Bear, Coconut Records
+You: Ween, Dirty Projectors, The Foo Fighters
 User: Electronica
-You: Daft Punk, SBTRKT, Aphex Twin
+You: Tycho, Daft Punk, Aphex Twin
 User: Rap
-You: Kendrick Lamar, MF DOOM, A Tribe Called Quest`;
+You: Eminem, MF DOOM, A Tribe Called Quest
+`;
 }
 
 function buildUserPrompt(genre: string) {
